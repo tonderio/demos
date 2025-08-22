@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tonder SDK Demos</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <header class="text-center mb-5">
+        <h1 class="display-5 fw-semibold mb-3">Tonder SDK Demos</h1>
+        <p class="text-muted mb-0">
+          Explore our interactive demos to integrate payments with Tonder SDK
+        </p>
+      </header>
+
+      <div class="row g-4">
+        <!-- Demo 1 -->
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body d-flex flex-column">
+              <h2 class="h5 mb-3">Cards Full SDK - APMs Lite SDK</h2>
+              <p class="text-muted small mb-3">
+                Complete integration of credit/debit cards and alternative payment methods using Tonder Lite SDK with validation and error handling.
+              </p>
+              <ul class="small text-muted mb-4 ps-3">
+                <li>Deposit modal</li>
+                <li>Card support (Full SDK)</li>
+                <li>APMs: MercadoPago, OXXO Pay, SPEI</li>
+                <li>Error handling & state</li>
+              </ul>
+              <div class="mt-auto d-flex flex-column gap-2 align-items-start">
+                <a href="./cards-full-apms-lite/index.html" class="btn btn-outline-primary btn-sm">View Demo</a>
+                <small class="text-muted">Source: <a class="text-decoration-none" target="_blank" rel="noopener" href="https://github.com/tonderio/demos/tree/main/cards-full-apms-lite">GitHub</a></small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo 2 -->
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body d-flex flex-column">
+              <h2 class="h5 mb-3">All Methods Lite SDK</h2>
+              <p class="text-muted small mb-3">
+                Deposit flow with multiple payment methods and specific limits for each option.
+              </p>
+              <ul class="small text-muted mb-4 ps-3">
+                <li>Deposit modal</li>
+                <li>Card (Visa/Mastercard)</li>
+                <li>MercadoPago</li>
+                <li>OXXO Pay</li>
+                <li>SPEI</li>
+              </ul>
+              <div class="mt-auto d-flex flex-column gap-2 align-items-start">
+                <a href="./lite-all-methods/index.html" class="btn btn-outline-primary btn-sm">View Demo</a>
+                <small class="text-muted">Source: <a class="text-decoration-none" target="_blank" rel="noopener" href="https://github.com/tonderio/demos/tree/main/lite-all-methods">GitHub</a></small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo 3 -->
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body d-flex flex-column">
+              <h2 class="h5 mb-3">Cards Full SDK - APMs Lite SDK (Iframe Flow)</h2>
+              <p class="text-muted small mb-3">
+                Same as the cards and APMs demo, but the entire redirect flow for alternative payment methods runs embedded inside iframes.
+              </p>
+              <ul class="small text-muted mb-4 ps-3">
+                <li>Full flow inside iframes</li>
+                <li>Cards (Full SDK)</li>
+                <li>APMs: MercadoPago, OXXO Pay, SPEI</li>
+                <li>Error & state handling</li>
+              </ul>
+              <div class="mt-auto d-flex flex-column gap-2 align-items-start">
+                <a href="./cards-full-apms-lite-with-iframe/index.html" class="btn btn-outline-primary btn-sm">View Demo</a>
+                <small class="text-muted">Source: <a class="text-decoration-none" target="_blank" rel="noopener" href="https://github.com/tonderio/demos/tree/main/cards-full-apms-lite-with-iframe">GitHub</a></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="text-center mt-5">
+        <small class="text-muted">Powered by <a href="https://tonder.io" class="text-decoration-none">Tonder</a></small>
+      </footer>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+  <body>
+    <div id="loading">Processing...</div>
+    <div id="message"></div>
+    <div id="tonder-checkout"></div>
+
+    <!-- Required only when using card payments-->
+    <script src="https://js.skyflow.com/v1/index.js"></script>
+    <!-- Stage Tonder SDK version -->
+    <script src="https://zplit-stage.s3.amazonaws.com/v1/bundle.min.js"></script>
+    <!-- Production Tonder SDK version -->
+    <!-- <script src="https://zplit-prod.s3.amazonaws.com/v1/bundle.min.js"></script> -->
+    <script>
+      let fullSDK = null;
+      let selectedMethod;
+      let amount;
+      let checkoutData;
+      (async () => {
+        const params = new URLSearchParams(location.search);
+        const tonderPaymentId = new URLSearchParams(window.location.search).get(
+          "tndr_payment_id",
+        );
+
+        // Define how you want to retrieve these parameters — this is up to your implementation.
+        // For example, they can be obtained via URL query params, postMessage, etc.
+        selectedMethod = params.get("method");
+        amount = parseFloat(params.get("amount"));
+        checkoutData = JSON.parse(
+          decodeURIComponent(params.get("checkoutData")),
+        );
+
+        // Validate if the current page load is the result of a redirect
+        // from a 3DS authentication or a voucher payment
+        if (tonderPaymentId) {
+          await createTonderFullInstance(false);
+          // Remove the Tonder checkout form from the page
+          fullSDK.removeCheckout();
+
+          // This validation (verify3dsTransaction) is optional and only needed if you want to display a message
+          // right after the first redirect (3DS or voucher).
+          // It only works on the very first redirect — if the page is reloaded afterwards,
+          // this function will not return any response.
+          // If you already have your own confirmation mechanism (e.g., Tonder webhooks, static/validation returnUrl, etc.),
+          // you don’t need to call this function.
+          fullSDK.verify3dsTransaction().then((res) => {
+            validateTransactionStatus(res);
+            hideLoading();
+          });
+        } else {
+          await createTonderFullInstance();
+          hideLoading();
+        }
+      })();
+
+      // create a new instance of Tonder FULL Checkout
+      async function createTonderFullInstance(inject = true) {
+        fullSDK = new TonderSdk.InlineCheckout({
+          mode: "stage",
+          apiKey: "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27",
+          returnUrl: window.location.href,
+          // This callback is triggered only when the payment flow finishes with
+          // a "Success" or "Declined" status, without requiring 3DS authentication.
+          callBack: async (response) => {
+            console.log("Payment response Full SDK");
+            validateTransactionStatus(response);
+          },
+          customization: {
+            displayMode: "light", // Set the UI theme (light or dark)
+            saveCards: {
+              showSaveCardOption: false, // Show/hide the "save card for future payments" checkbox
+              autoSave: false, // Automatically save the card without displaying the checkbox
+              showSaved: false, // Show/hide the list of previously saved cards
+            },
+            paymentButton: {
+              show: true, // Show/hide the payment button
+              showAmount: true, // Display the payment amount next to the button text
+              text: "Depositar", // Customize the payment button text
+            },
+            cancelButton: {
+              show: false, // Show/hide the cancel button
+              text: "Cancel", // Customize the cancel button text
+            },
+            paymentMethods: {
+              show: false, // Show/hide the list of available payment methods
+            },
+            cardForm: {
+              show: true, // Show/hide the card form
+            },
+          },
+        });
+
+        // Include the secureToken only when using the "saved cards" feature.
+        // This token is required to authorize the use of previously stored cards
+        // or to save new cards.
+        await fullSDK.configureCheckout({
+          ...checkoutData,
+          cart: {
+            ...checkoutData.cart,
+            total: amount, // Update total with the entered amount
+            items: [{ ...checkoutData.cart.items[0], amount_total: amount }], // Update total with the entered amount
+          },
+          secureToken: "eyJhbGc...", // Replace it with a valid secure token (recommended to get it from your backend)
+        });
+
+        if (inject) await fullSDK.injectCheckout();
+        return fullSDK;
+      }
+
+      function validateTransactionStatus(transaction) {
+        if (!transaction) return;
+        console.log("Payment response", transaction);
+        if (transaction.error) {
+          console.log("Payment error", transaction.error);
+          showMessage("Payment failed. Please try again or contact support.");
+          alert("Payment failed");
+          return;
+        }
+
+        if (transaction.transaction_status === "Pending") {
+          // Pending status only for voucher payments
+          alert(
+            "Payment initiated successfully! Please complete the payment process using the provided instructions (payment voucher). Your transaction will be confirmed once the payment is completed.",
+          );
+        } else if (transaction.transaction_status === "Success") {
+          showMessage("Payment successful. Thank you for your deposit.");
+          alert("Payment successful");
+        } else if (transaction.transaction_status === "Declined") {
+          showMessage(
+            "Payment declined. Please check your card details or try another payment method.",
+          );
+          alert("Payment declined");
+        }
+      }
+
+      function hideLoading() {
+        try {
+          const loadingElement = document.getElementById("loading");
+          if (loadingElement) {
+            loadingElement.style.display = "none";
+          }
+        } catch {}
+      }
+
+      function showMessage(message = "") {
+        try {
+          const loadingElement = document.getElementById("message");
+          if (loadingElement) {
+            loadingElement.innerText = message;
+          }
+        } catch {}
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deposits Demo</title>
+    <style>
+      .payment-logo {
+        width: 90px;
+        height: 40px;
+        object-fit: contain;
+      }
+      .card-logo {
+        width: 40px;
+        height: 25px;
+        object-fit: contain;
+      }
+    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="bg-body-tertiary">
+    <!-- Header -->
+    <header class="navbar bg-white shadow-sm px-4">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img
+          src="https://d35a75syrgujp0.cloudfront.net/tonder/logo-tonder-blue.png"
+          alt="Logo"
+          style="height: 40px"
+        />
+      </a>
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <button class="btn btn-outline-secondary fw-sem ibold">
+          Pedro Perez
+        </button>
+        <button class="btn btn-outline-secondary">140.00 MXN</button>
+        <button
+          class="btn btn-success fw-semibold"
+          id="depositBtn"
+          data-bs-toggle="modal"
+          data-bs-target="#depositModal"
+        >
+          Deposit
+        </button>
+      </div>
+    </header>
+
+    <!-- Modal Bootstrap -->
+    <div class="modal fade" id="depositModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <div>
+              <h5 class="modal-title fw-bold mb-1">MAKE YOUR DEPOSIT</h5>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Tabs -->
+            <ul class="nav nav-tabs" id="depositTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="deposit-amount-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#deposit-amount"
+                  type="button"
+                  role="tab"
+                  aria-controls="deposit-amount"
+                  aria-selected="true"
+                >
+                  Deposit Amount
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="payment-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#payment"
+                  type="button"
+                  role="tab"
+                  aria-controls="payment"
+                  aria-selected="false"
+                >
+                  Payment
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content pt-3">
+              <!-- Tab Cantidad de deposito -->
+              <div
+                class="tab-pane fade show active"
+                id="deposit-amount"
+                role="tabpanel"
+                aria-labelledby="deposit-amount-tab"
+              >
+                <div class="d-flex flex-column align-items-center my-4">
+                  <small class="text-muted"
+                    >PLEASE ENTER THE DEPOSIT AMOUNT</small
+                  >
+                  <div class="input-group mb-4 w-auto">
+                    <span class="input-group-text fw-semibold">MXN</span>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="amountInput"
+                      placeholder="0.00"
+                      value="100"
+                    />
+                  </div>
+                </div>
+                <div class="vstack gap-3">
+                  <!-- Tarjeta -->
+                  <div
+                    class="border rounded p-3 d-flex align-items-center w-100 gap-3"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+                        alt="Visa"
+                        class="card-logo"
+                      />
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                        alt="Mastercard"
+                        class="card-logo"
+                      />
+                    </div>
+                    <div
+                      class="d-flex gap-4 small text-muted mx-auto text-center"
+                    >
+                      <div>
+                        <span class="d-block fw-semibold">MIN</span>MXN 20.00
+                      </div>
+                      <div>
+                        <span class="d-block fw-semibold">MAX</span>MXN
+                        300,000.00
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-success fw-semibold ms-auto deposit-method-btn"
+                      id="card"
+                    >
+                      Deposit
+                    </button>
+                  </div>
+                  <!-- MercadoPago -->
+                  <div
+                    class="border rounded p-3 d-flex align-items-center w-100 gap-3"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <img
+                        src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo_large_25years@2x.png"
+                        alt="MercadoPago"
+                        class="payment-logo"
+                      />
+                    </div>
+                    <div
+                      class="d-flex gap-4 small text-muted mx-auto text-center"
+                    >
+                      <div>
+                        <span class="d-block fw-semibold">MIN</span>MXN 20.00
+                      </div>
+                      <div>
+                        <span class="d-block fw-semibold">MAX</span>MXN
+                        10,000.00
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-success fw-semibold ms-auto deposit-method-btn"
+                      id="mercadopago"
+                    >
+                      Deposit
+                    </button>
+                  </div>
+                  <!-- OXXO Pay -->
+                  <div
+                    class="border rounded p-3 d-flex align-items-center w-100 gap-3"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <img
+                        src="https://d35a75syrgujp0.cloudfront.net/payment_methods/oxxopay.png"
+                        alt="OXXO Pay"
+                        class="payment-logo"
+                      />
+                    </div>
+                    <div
+                      class="d-flex gap-4 small text-muted mx-auto text-center"
+                    >
+                      <div>
+                        <span class="d-block fw-semibold">MIN</span>MXN 20.00
+                      </div>
+                      <div>
+                        <span class="d-block fw-semibold">MAX</span>MXN
+                        10,000.00
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-success fw-semibold ms-auto deposit-method-btn"
+                      id="oxxopay"
+                    >
+                      Deposit
+                    </button>
+                  </div>
+                  <!-- SPEI -->
+                  <div
+                    class="border rounded p-3 d-flex align-items-center w-100 gap-3"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <img
+                        src="https://d35a75syrgujp0.cloudfront.net/payment_methods/spei.png"
+                        alt="SPEI"
+                        class="payment-logo"
+                      />
+                    </div>
+                    <div
+                      class="d-flex gap-4 small text-muted mx-auto text-center"
+                    >
+                      <div>
+                        <span class="d-block fw-semibold">MIN</span>MXN 20.00
+                      </div>
+                      <div>
+                        <span class="d-block fw-semibold">MAX</span>MXN
+                        100,000.00
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-success fw-semibold ms-auto deposit-method-btn"
+                      id="spei"
+                    >
+                      Deposit
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="payment"
+                role="tabpanel"
+                aria-labelledby="payment-tab"
+              >
+                <!-- IFRAMES TO LOAD TONDER SDKs -->
+                <iframe id="iframe_tonder_sdk" class="d-none"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="text-center py-4 small text-muted">
+      <a
+        href="https://github.com/tonderio/demos/tree/main/cards-full-apms-lite-with-iframe"
+        target="_blank"
+        rel="noopener"
+        class="text-decoration-none"
+        >View source on GitHub</a
+      >
+    </footer>
+    <script src="index.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
