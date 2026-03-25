@@ -99,7 +99,7 @@ async function handleDepositClick(method) {
   if (selectedMethod !== "card") {
     await handlePayment(selectedMethod);
   } else {
-    showCardForm();
+    await showCardForm();
   }
 }
 
@@ -114,19 +114,10 @@ async function handlePayment(buttonId = "") {
     },
   };
 
-  if (selectedMethod === "card") {
-    const validCardForm = validateCardForm();
-    if (!validCardForm) return alert("Please complete the card form correctly");
-    data["card"] = {
-      card_number: document.getElementById("cardNumber").value,
-      cvv: document.getElementById("cvv").value,
-      expiration_month: document.getElementById("expMonth").value,
-      expiration_year: document.getElementById("expYear").value,
-      cardholder_name: document.getElementById("cardHolder").value,
-    };
-  } else {
+  if (selectedMethod !== "card") {
     data["payment_method"] = selectedMethod;
   }
+  // For card: no card data needed — Skyflow collects from mounted fields
 
   const payBtn = document.getElementById(buttonId);
   try {
@@ -149,31 +140,23 @@ async function handlePayment(buttonId = "") {
   }
 }
 
-function showCardForm() {
+async function showCardForm() {
   const paymentTabTrigger = document.querySelector("#payment-tab");
   if (paymentTabTrigger && window.bootstrap && bootstrap.Tab) {
     const tab = new bootstrap.Tab(paymentTabTrigger);
     tab.show();
 
+    await liteSDK.mountCardFields({
+      fields: ["cardholder_name", "card_number", "expiration_month", "expiration_year", "cvv"],
+    });
+
     // Add event listeners to modal deposit button
     const modalDepositButton = document.getElementById("card_deposit");
-    modalDepositButton.addEventListener("click", async function (event) {
+    modalDepositButton.addEventListener("click", async function () {
       await handlePayment("card_deposit");
     });
   } else {
     paymentTabTrigger?.click();
-  }
-}
-
-function validateCardForm() {
-  const form = document.getElementById("cardPaymentForm");
-  if (form) {
-    if (!form.checkValidity()) {
-      form.classList.add("was-validated");
-      return false;
-    }
-    form.classList.add("was-validated");
-    return true;
   }
 }
 
