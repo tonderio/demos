@@ -14,3 +14,31 @@ psd
 thumb
 sketch
 
+### Flutter
+**/flutter-checkout-demo/.dart_tool/
+**/flutter-checkout-demo/.flutter-plugins
+**/flutter-checkout-demo/.flutter-plugins-dependencies
+**/flutter-checkout-demo/.packages
+**/flutter-checkout-demo/build/
+**/flutter-checkout-demo/pubspec.lock
+
+# Android
+**/flutter-checkout-demo/android/.gradle/
+**/flutter-checkout-demo/android/captures/
+**/flutter-checkout-demo/android/gradlew
+**/flutter-checkout-demo/android/gradlew.bat
+**/flutter-checkout-demo/android/local.properties
+**/flutter-checkout-demo/android/key.properties
+**/flutter-checkout-demo/android/**/GeneratedPluginRegistrant.java
+
+# iOS
+**/flutter-checkout-demo/ios/Flutter/App.framework
+**/flutter-checkout-demo/ios/Flutter/Flutter.framework
+**/flutter-checkout-demo/ios/Flutter/Flutter.podspec
+**/flutter-checkout-demo/ios/Flutter/Generated.xcconfig
+**/flutter-checkout-demo/ios/Flutter/ephemeral/
+**/flutter-checkout-demo/ios/Flutter/flutter_export_environment.sh
+**/flutter-checkout-demo/ios/Pods/
+**/flutter-checkout-demo/ios/.symlinks/
+**/flutter-checkout-demo/ios/Runner/GeneratedPluginRegistrant.*
+**/flutter-checkout-demo/ios/Podfile.lock

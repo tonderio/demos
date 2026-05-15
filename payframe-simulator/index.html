@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - payframe-dev</title>
+  <link rel="stylesheet" href="assets/checkout.css">
+</head>
+<body>
+  <div
+    id="checkout-root"
+    class="checkout-container"
+    data-checkout-url="https://stage-payflow.tonder.io/checkout/cs_150_70832_ec8077ccb813fb397205886540e3d3ea3427cf8bd85fc691"
+    data-session-id="e0c88409-cc1c-4596-9455-7ddf1e6d95a9"
+    data-order-id="6a0e3dda30be61f23f99005e"
+    data-webhook-url="https://api-payframe-dev.paybridge.com.mx/api/v1/webhooks/tonder"
+    data-return-url="https://betxicodev.betplay.site/"
+    data-gateway-origin="https://stage-payflow.tonder.io"
+    data-theme-primary="#1f6f4d"
+    data-theme-grad-start="#163a2c"
+    data-theme-grad-end="#0f241d"
+  >
+    <div class="payment-container">
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Cargando checkout seguro...</p>
+      </div>
+
+      <div id="error-container" class="is-hidden"></div>
+
+      <iframe
+        id="checkout-iframe"
+        class="is-hidden"
+        allow="payment"
+        title="Hosted Checkout"
+      ></iframe>
+    </div>
+  </div>
+
+  <script src="assets/checkout.js" defer></script>
+</body>
+</html>
